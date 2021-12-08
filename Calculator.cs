@@ -8,8 +8,8 @@ using System;
 namespace Calculator
 {
 
-    // Operators
-    enum Operators
+    // Math Operations
+    enum MathOperations
     {
         Addition,
         Subtraction,
@@ -38,72 +38,77 @@ namespace Calculator
             }
         }
 
-        // Calculation
-        static double Calculation(double currentResult, Operators o)
+        // Show error message and wait for keypress.
+        static void ErrorMessage(string message)
+        {
+            Console.WriteLine(message);
+            UserInput.WaitForKey();
+        }
+
+        // Do calculation and return the result.
+        static double Calculation(double currentResult, MathOperations mathOperation)
         {
             double result = currentResult;
             double number;
-            switch(o)
+            switch(mathOperation)
             {
-                case Operators.Addition:
+                case MathOperations.Addition:
                     number = UserInput.InputDouble("[ + ] Input a number");
                     result = Add(result, number);
                     break;
 
-                case Operators.Subtraction:
+                case MathOperations.Subtraction:
                     number = UserInput.InputDouble("[ - ] Input a number");
                     result = Subtract(result, number);
                     break;
 
-                case Operators.Multiplication:
+                case MathOperations.Multiplication:
                     number = UserInput.InputDouble("[ * ] Input a number");
                     result = Multiply(result, number);
                     break;
 
-                case Operators.Division:
+                case MathOperations.Division:
                     number = UserInput.InputDouble("[ / ] Input a number");
                     if (number == 0.0)
                     {
-                        Console.WriteLine("\nerror: Can't divide with 0!");
-                        UserInput.WaitForKey();
+                        ErrorMessage("\nError: Can't divide with 0!");
                         return result;
                     }
                     result = Divide(result, number);
                     break;
 
                 default:
-                    Console.WriteLine("error: Invalid operator!");
-                    UserInput.WaitForKey();
+                    ErrorMessage("Error: Invalid math operation!");
                     break;
             }
             return result;
         }
 
         // Addition of two numbers.
-        static double Add(double firstNumber, double secondNumber)
+        static double Add(double x, double y)
         {
-            return firstNumber + secondNumber;
+            return x + y;
         }
 
         // Subtraction of two numbers.
-        static double Subtract(double firstNumber, double secondNumber)
+        static double Subtract(double x, double y)
         {
-            return firstNumber - secondNumber;
+            return x - y;
         }
 
         // Multiplication of two numbers.
-        static double Multiply(double firstNumber, double secondNumber)
+        static double Multiply(double x, double y)
         {
-            return firstNumber * secondNumber;
+            return x * y;
         }
 
         // Division of two numbers.
-        static double Divide(double firstNumber, double secondNumber)
+        static double Divide(double x, double y)
         {
-            double result = firstNumber;
-            if (secondNumber != 0.0)
+            double result = x;
+            if (y != 0.0)
             {
-                result /= secondNumber;
+                result /= y;
             }
             return result;
         }
@@ -137,19 +142,19 @@ namespace Calculator
                         break;
 
                     case 1:
-                        result = Calculation(result, Operators.Addition);
+                        result = Calculation(result, MathOperations.Addition);
                         break;
 
                     case 2:
-                        result = Calculation(result, Operators.Subtraction);
+                        result = Calculation(result, MathOperations.Subtraction);
                         break;
 
                     case 3:
-                        result = Calculation(result, Operators.Multiplication);
+                        result = Calculation(result, MathOperations.Multiplication);
                         break;
 
                     case 4:
-                        result = Calculation(result, Operators.Division);
+                        result = Calculation(result, MathOperations.Division);
                         break;
 
                     case 5:
