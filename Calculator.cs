@@ -8,15 +8,6 @@ using System;
 namespace Calculator
 {
 
-    // Math Operations
-    enum MathOperations
-    {
-        Addition,
-        Subtraction,
-        Multiplication,
-        Division
-    }
-
     class Program
     {
         
@@ -43,45 +34,6 @@ namespace Calculator
         {
             Console.WriteLine(message);
             UserInput.WaitForKey();
-        }
-
-        // Do calculation and return the result.
-        static double Calculation(double currentResult, MathOperations mathOperation)
-        {
-            double result = currentResult;
-            double number;
-            switch(mathOperation)
-            {
-                case MathOperations.Addition:
-                    number = UserInput.InputDouble("[ + ] Input a number");
-                    result = Add(result, number);
-                    break;
-
-                case MathOperations.Subtraction:
-                    number = UserInput.InputDouble("[ - ] Input a number");
-                    result = Subtract(result, number);
-                    break;
-
-                case MathOperations.Multiplication:
-                    number = UserInput.InputDouble("[ * ] Input a number");
-                    result = Multiply(result, number);
-                    break;
-
-                case MathOperations.Division:
-                    number = UserInput.InputDouble("[ / ] Input a number");
-                    if (number == 0.0)
-                    {
-                        ErrorMessage("\nError: Can't divide with 0!");
-                        return result;
-                    }
-                    result = Divide(result, number);
-                    break;
-
-                default:
-                    ErrorMessage("Error: Invalid math operation!");
-                    break;
-            }
-            return result;
         }
 
         // Addition of two numbers.
@@ -133,8 +85,9 @@ namespace Calculator
                 Console.WriteLine("");
 
                 // Handle menu choices.
-                // Note - 'default' isn't used, since 'InputInteger' keeps 
+                // Note - 'default' isn't used since 'InputInteger' keeps 
                 // promting the user until a valid choice is made.
+                double number;
                 switch(menuChoice)
                 {
                     case 0:
@@ -142,19 +95,30 @@ namespace Calculator
                         break;
 
                     case 1:
-                        result = Calculation(result, MathOperations.Addition);
+                        number = UserInput.InputDouble("[ + ] Input a number");
+                        result = Add(result, number);
                         break;
 
                     case 2:
-                        result = Calculation(result, MathOperations.Subtraction);
+                        number = UserInput.InputDouble("[ - ] Input a number");
+                        result = Subtract(result, number);
                         break;
 
                     case 3:
-                        result = Calculation(result, MathOperations.Multiplication);
+                        number = UserInput.InputDouble("[ * ] Input a number");
+                        result = Multiply(result, number);
                         break;
 
                     case 4:
-                        result = Calculation(result, MathOperations.Division);
+                        number = UserInput.InputDouble("[ / ] Input a number");
+                        if (number == 0.0)
+                        {
+                            ErrorMessage("\nError: Can't divide with 0!");
+                        }
+                        else
+                        {
+                            result = Divide(result, number);
+                        }                  
                         break;
 
                     case 5:
